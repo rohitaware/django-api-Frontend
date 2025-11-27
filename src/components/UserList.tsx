@@ -32,12 +32,19 @@ export const UserList = () => {
       const response = await apiClient.get<PaginatedUserResponse>('/users/', {
         params: { page },
       });
-      setUsers(response.data.results);
+      // Ensure we always set an array - backend might return unexpected shapes
+      const results = Array.isArray(response.data?.results) ? response.data.results : [];
+      if (!Array.isArray(response.data?.results)) {
+        console.warn('Unexpected /users/ response.results shape:', response.data?.results);
+      }
+      setUsers(results);
       setTotalResults(response.data.count);
       setNextPageUrl(response.data.next);
       setPrevPageUrl(response.data.previous);
     } catch (error) {
       console.error('Failed to fetch users:', error);
+      // Ensure UI always receives a stable array value on failure
+      setUsers([]);
     } finally {
       setIsLoading(false);
     }
@@ -75,13 +82,17 @@ export const UserList = () => {
               {isLoading ? (
                 <tr><td colSpan={3} className="text-center py-10">Loading...</td></tr>
               ) : (
-                users.map((user) => (
-                  <tr key={user.id} className="hover:bg-gray-50">
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{user.username}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{user.email || '-'}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{`${user.first_name} ${user.last_name}`.trim() || '-'}</td>
-                  </tr>
-                ))
+                users.length > 0 ? (
+                  users.map((user) => (
+                    <tr key={user.id} className="hover:bg-gray-50">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{user.username}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{user.email || '-'}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{`${user.first_name} ${user.last_name}`.trim() || '-'}</td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr><td colSpan={3} className="text-center py-10 text-gray-500">No users found.</td></tr>
+                )
               )}
             </tbody>
           </table>

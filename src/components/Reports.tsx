@@ -41,7 +41,11 @@ export const Reports = () => {
           ...(toDate && { to_date: toDate }),
         },
       });
-      setReportData(response.data.results);
+      const results = Array.isArray(response.data?.results) ? response.data.results : [];
+      if (!Array.isArray(response.data?.results)) {
+        console.warn('Unexpected /messages/ response.results shape:', response.data?.results);
+      }
+      setReportData(results);
       setTotalResults(response.data.count);
       setNextPageUrl(response.data.next);
       setPrevPageUrl(response.data.previous);
@@ -150,7 +154,7 @@ export const Reports = () => {
               <tbody className="bg-white divide-y divide-gray-200">
                 {isLoading ? (
                   <tr><td colSpan={5} className="px-6 py-10 text-center text-gray-500">Loading data...</td></tr>
-                ) : reportData.length > 0 ? (
+                ) : Array.isArray(reportData) && reportData.length > 0 ? (
                   reportData.map((row) => (
                     <tr key={row.id} className="hover:bg-gray-50 transition">
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">#{row.id}</td>

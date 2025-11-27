@@ -36,7 +36,8 @@ export const Drawer = () => {
   }, []);
 
   const isParentActive = useCallback((item: MenuItem) => {
-    if (item.submenu.length === 0) {
+    // Defensive: submenu should be an array, but guard just in case
+    if (!Array.isArray(item.submenu) || item.submenu.length === 0) {
       return location.pathname === item.path;
     }
     return item.submenu.some(subitem => location.pathname === subitem.path);
@@ -144,7 +145,7 @@ export const Drawer = () => {
 
                 {item.submenu.length > 0 && expandedMenus.includes(item.id!) && (
                   <ul className="mt-2 ml-4 space-y-1">
-                    {item.submenu.map((subitem) => (
+                      {Array.isArray(item.submenu) ? item.submenu.map((subitem) => (
                       <li key={subitem.path}>
                         <Link
                           to={subitem.path}
@@ -158,7 +159,7 @@ export const Drawer = () => {
                           {subitem.label}
                         </Link>
                       </li>
-                    ))}
+                    )) : null}
                   </ul>
                 )}
               </li>
