@@ -2,10 +2,11 @@ import axios from 'axios';
 import { useAuthStore } from '../store/authStore';
 
 // Resolve base URL from environment variables; fall back to localhost for dev.
+// Prefer deployment URL first (avoid picking local dev URL accidentally in builds)
 const baseURL =
+  import.meta.env.VITE_API_BASE_URL_DEPLOY ||
   import.meta.env.VITE_API_BASE_URL ||
   import.meta.env.VITE_API_URL ||
-  import.meta.env.VITE_API_BASE_URL_DEPLOY ||
   'http://127.0.0.1:8000/api';
 
 const apiClient = axios.create({
