@@ -32,7 +32,7 @@ export const UserList = () => {
       const response = await apiClient.get<PaginatedUserResponse>('/users/', {
         params: { page },
       });
-      // Ensure we always set an array - backend might return unexpected shapes
+      
       const results = Array.isArray(response.data?.results) ? response.data.results : [];
       if (!Array.isArray(response.data?.results)) {
         console.warn('Unexpected /users/ response.results shape:', response.data?.results);
@@ -43,7 +43,7 @@ export const UserList = () => {
       setPrevPageUrl(response.data.previous);
     } catch (error) {
       console.error('Failed to fetch users:', error);
-      // Ensure UI always receives a stable array value on failure
+      
       setUsers([]);
     } finally {
       setIsLoading(false);
@@ -56,9 +56,9 @@ export const UserList = () => {
 
   return (
     <div className="p-4 pt-20 lg:pt-8 lg:p-8">
-      {/* The pt-20 on mobile ensures the title is below the fixed hamburger menu button */}
+     
       <div className="mb-8">
-        {/* Responsive text size for the main heading */}
+        
         <h1 className="text-2xl md:text-3xl font-bold text-gray-900">User Management</h1>
         <p className="text-gray-500 mt-2">Browse and manage system users.</p>
       </div>

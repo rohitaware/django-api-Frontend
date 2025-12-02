@@ -36,7 +36,7 @@ export const Drawer = () => {
   }, []);
 
   const isParentActive = useCallback((item: MenuItem) => {
-    // Defensive: submenu should be an array, but guard just in case
+    
     if (!Array.isArray(item.submenu) || item.submenu.length === 0) {
       return location.pathname === item.path;
     }
@@ -59,7 +59,7 @@ export const Drawer = () => {
       submenu: []
     },
     {
-      id: 'reports', // for submenu toggling
+      id: 'reports', 
       label: 'Reports',
       icon: FileText,
       submenu: [
@@ -76,7 +76,7 @@ export const Drawer = () => {
           onClick={() => setIsOpen(!isOpen)}
           className="text-white p-2"
         >
-          {/* The X is inside the drawer, so we only need the Menu icon here */}
+          
           <Menu className="w-6 h-6" />
         </button>
         <h2 className="text-xl font-bold text-sky-400">MoneySpot</h2>
@@ -114,7 +114,7 @@ export const Drawer = () => {
                     onClick={() => toggleSubmenu(item.id!)}
                     className={`w-full flex items-center justify-between px-4 py-3 rounded-lg transition ${
                       isParentActive(item)
-                        ? 'bg-sky-500 text-white' // Always active if a child is active
+                        ? 'bg-sky-500 text-white' 
                         : 'hover:bg-gray-800 text-gray-300'
                     }`}
                   >

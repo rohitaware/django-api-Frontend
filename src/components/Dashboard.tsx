@@ -30,9 +30,9 @@ export const Dashboard = () => {
 
   return (
     <div className="p-4 pt-20 lg:pt-8 lg:p-8">
-      {/* The pt-20 on mobile ensures the title is below the fixed hamburger menu button */}
+      
       <div className="mb-8">
-        {/* Responsive text size for the main heading */}
+       
         <h1 className="text-2xl md:text-3xl font-bold text-gray-900">Dashboard Overview</h1>
         <p className="text-gray-500 mt-2">
           Welcome back, <span className="font-semibold text-sky-600">{user ? user.username : '...'}</span>! Here's what's happening today.

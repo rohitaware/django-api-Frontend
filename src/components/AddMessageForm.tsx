@@ -3,7 +3,7 @@ import apiClient from '../api/axios';
 import { Send } from 'lucide-react';
 
 interface AddMessageFormProps {
-  onMessageAdded: () => void; // Callback to notify parent component
+  onMessageAdded: () => void; 
 }
 
 export const AddMessageForm = ({ onMessageAdded }: AddMessageFormProps) => {
@@ -27,7 +27,7 @@ export const AddMessageForm = ({ onMessageAdded }: AddMessageFormProps) => {
       await apiClient.post('/messages/', { message });
       setSuccess('Message sent successfully!');
       setMessage('');
-      onMessageAdded(); // Notify parent that a message was added
+      onMessageAdded(); 
     } catch (err) {
       setError('Failed to send message. Please try again.');
       console.error(err);

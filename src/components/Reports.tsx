@@ -33,7 +33,7 @@ export const Reports = () => {
     setShowResults(true);
     setCurrentPage(page);
     try {
-      // The backend endpoint is still /messages/, but we present it as "Reports" on the frontend.
+     
       const response = await apiClient.get<PaginatedReportResponse>('/messages/', {
         params: {
           page,
@@ -58,17 +58,17 @@ export const Reports = () => {
   };
 
   const handleDelete = async (messageId: number) => {
-    // Optional: Ask for confirmation
+  
     if (!window.confirm('Are you sure you want to delete this message?')) {
       return;
     }
     try {
       await apiClient.delete(`/messages/${messageId}/`);
-      // Remove the message from the local state to update the UI instantly
+      
       setReportData((prevData) => prevData.filter((report) => report.id !== messageId));
     } catch (error) {
       console.error('Failed to delete message:', error);
-      // You could show an error toast here
+     
       alert('You do not have permission to delete this message.');
     }
   };

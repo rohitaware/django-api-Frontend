@@ -8,13 +8,13 @@ import { Dashboard } from './components/Dashboard';
 import { UserList } from './components/UserList';
 import { Reports } from './components/Reports';
 
-// A layout for authenticated users
+
 const AppLayout = () => {
   return (
     <div className="min-h-screen bg-gray-100">
       <Drawer />
       <div className="lg:ml-64 min-h-screen">
-        <Outlet /> {/* Child routes will render here */}
+        <Outlet /> 
       </div>
     </div>
   );
@@ -31,7 +31,7 @@ function App() {
   const fetchUser = useAuthStore((state) => state.fetchUser);
   const token = useAuthStore.getState().token;
 
-  // On initial app load, set the auth token for all subsequent API requests if it exists.
+  
   if (token) {
     apiClient.defaults.headers.common['Authorization'] = `Token ${token}`;
   }
